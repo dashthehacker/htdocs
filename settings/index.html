@@ -12,12 +12,18 @@
         <audio autoplay="true" loop="true" src="/mus/Uwa!!_So_Holiday♫_music.ogg"></audio>
         <script src="update-settings.js"></script>
         <h1>Welcome to site settings!</h1>
-        <h3>Something to address is due to newer web browsers sucking<br>My website cannot play audio with "User consent" aka you clicking once. So that is why most of my projects have you click a button. <br>Though this page has a button you can click to make my site ignore this and just play music and remove the button</h3>
+        <h3>Something to address is due to newer web browsers sucking<br>My website cannot play audio with "User consent" aka you clicking once. So that is why most of my projects have you click a button.</h3>
         <h2>I also will be adding theme changing and music changes</h2>
         <h2>User settings:</h2>
         <!--<h1>Bypass the button required for audio:<input id="bypassaudiobtn" type="checkbox"></h1>-->
         <h1>Put your cat out of it's misery: <button onclick="if (confirm('Do you want to kill your cat?')) {localStorage.removeItem('virtualPetSave');}">DELETE THE VIRTUAL PET SAVE</button></h1>
         <h1>Make the site go crazy: <button onclick="amoungus();">???</button></h1>
+        <div><h1>Theme:</h1>
+            <select id="choice">
+                <option value="space">Space</option>
+                <option value="matrix">Hacker</option>
+              </select>
+              <button onclick="getChoice()">Submit</button></div>         
         <h1 id="getoutofmycode">Secret one: <button id="secretbutton" onclick="window.location='/dash projects/fight-me/'">UNUSED SECRET</button></h1>
     </body>
 </html>

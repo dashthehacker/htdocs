@@ -32,3 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Elements not found");
     }
 });
+
+function getChoice() {
+    let selected = document.getElementById("choice").value;
+    console.log(selected);
+    localStorage.setItem("theme", selected);
+  }
+  
