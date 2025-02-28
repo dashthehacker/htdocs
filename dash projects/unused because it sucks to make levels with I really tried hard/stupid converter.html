@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert Tiled JSON to Game JSON</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #output {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        pre {
+            background-color: #222;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        input[type="file"] {
+            color: #fff;
+            background-color: #444;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="file"]:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="file" id="tiledJSON" />
+        <div id="output"></div>
+    </div>
+
+    <script>
+        const METER = 32;
+        const GRAVITY = 9.8;
+        const MAXDX = 10;
+        const MAXDY = 15;
+        const IMPULSE = 12;
+        const ACCEL = 2;
+        const FRICTION = 0.2;
+
+        let player, monsters = [], treasure = [], cells = [];
+
+        // Setup the map and entities from the Tiled JSON data
+        function setup(map) {
+            let data = map.layers[0].data, // the platforms
+                objects = map.layers[1].objects, // the entities
+                n, obj, entity;
+            for(n = 0; n < objects.length; n++) {
+                obj = objects[n];
+                entity = setupEntity(obj);
+                switch(obj.type) {
+                    case "player":
+                        player = entity;
+                        break;
+                    case "monster":
+                        monsters.push(entity);
+                        break;
+                    case "treasure":
+                        treasure.push(entity);
+                        break;
+                }
+            }
+            cells = data;
+            showGameData();
+        }
+
+        // Setup the entity based on its properties
+        function setupEntity(obj) {
+            let entity = {};
+            entity.x = obj.x;
+            entity.y = obj.y;
+            entity.dx = 0;
+            entity.dy = 0;
+            entity.gravity = METER * (obj.properties.gravity || GRAVITY);
+            entity.maxdx = METER * (obj.properties.maxdx || MAXDX);
+            entity.maxdy = METER * (obj.properties.maxdy || MAXDY);
+            entity.impulse = METER * (obj.properties.impulse || IMPULSE);
+            entity.accel = entity.maxdx / (obj.properties.accel || ACCEL);
+            entity.friction = entity.maxdx / (obj.properties.friction || FRICTION);
+            entity.monster = obj.type == "monster";
+            entity.player = obj.type == "player";
+            entity.treasure = obj.type == "treasure";
+            entity.left = obj.properties.left;
+            entity.right = obj.properties.right;
+            return entity;
+        }
+
+        // Display the converted game data
+        function showGameData() {
+            const output = document.getElementById('output');
+            const gameData = {
+                player: player,
+                monsters: monsters,
+                treasure: treasure,
+                platforms: cells
+            };
+            output.innerHTML = `<h3>Converted Game JSON:</h3><pre>${JSON.stringify(gameData, null, 4)}</pre>`;
+        }
+
+        // Handle the file input
+        document.getElementById('tiledJSON').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const map = JSON.parse(e.target.result);
+                        setup(map);
+                    } catch (error) {
+                        alert('Error parsing the JSON file.');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+    </script>
+</body>
+</html>

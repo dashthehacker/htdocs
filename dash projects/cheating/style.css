@@ -1,0 +1,20 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+.rainbow-text span:nth-child(1) { color: red; }
+.rainbow-text span:nth-child(2) { color: orange; }
+.rainbow-text span:nth-child(3) { color: yellow; }
+.rainbow-text span:nth-child(4) { color: green; }
+.rainbow-text span:nth-child(5) { color: blue; }
+.rainbow-text span:nth-child(6) { color: indigo; }
+.rainbow-text span:nth-child(7) { color: violet; }
+
+.size-biggify {
+    font-size:xx-large;
+}
+
+.p-bigger-size {
+    font-size:25px;
+}

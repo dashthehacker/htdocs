@@ -1,0 +1,18 @@
+@keyframes rainbow {
+    0% { background-color: red; }
+    16% { background-color: orange; }
+    33% { background-color: yellow; }
+    50% { background-color: green; }
+    66% { background-color: blue; }
+    83% { background-color: indigo; }
+    100% { background-color: violet; }
+}
+
+#fight-me {
+    color: white; /* Ensure text color remains unchanged */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Optional for text readability */
+    animation: rainbow 3s infinite linear;
+    background-size: 300%; /* Ensures smooth gradient transitions */
+    text-align: center;
+    outline: none; /* Removes default outline when focused */
+}

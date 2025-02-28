@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cube CSS Background</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .unique-scene {
+            width: 200px;
+            height: 200px;
+            perspective: 800px;
+            position: relative;
+            top: 200px;
+            left: 50px;
+            animation: floatUpDown 1s ease-in-out infinite;
+        }
+
+        .unique-cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: unique-spin 5s infinite linear;
+        }
+
+        .unique-cube > div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: 400% 400%;
+            border: 2px solid white;
+            animation: unique-rainbow 3s infinite linear;
+        }
+
+        /* Cube Faces */
+        .unique-front {
+            transform: rotateY(0deg) translateZ(100px);
+        }
+        .unique-back {
+            transform: rotateY(180deg) translateZ(100px);
+        }
+        .unique-right {
+            transform: rotateY(90deg) translateZ(100px);
+        }
+        .unique-left {
+            transform: rotateY(-90deg) translateZ(100px);
+        }
+        .unique-top {
+            transform: rotateX(90deg) translateZ(100px);
+        }
+        .unique-bottom {
+            transform: rotateX(-90deg) translateZ(100px);
+        }
+
+        @keyframes unique-spin {
+            from {
+                transform: rotateX(0deg) rotateY(0deg);
+            }
+            to {
+                transform: rotateX(360deg) rotateY(360deg);
+            }
+        }
+
+        @keyframes unique-rainbow {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes floatUpDown {
+            0% { transform: translateY(-50%) translateY(-30px); }
+            50% { transform: translateY(-50%) translateY(30px); }
+            100% { transform: translateY(-50%) translateY(-30px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="unique-scene">
+        <div class="unique-cube">
+            <div class="unique-front"></div>
+            <div class="unique-back"></div>
+            <div class="unique-right"></div>
+            <div class="unique-left"></div>
+            <div class="unique-top"></div>
+            <div class="unique-bottom"></div>
+        </div>
+    </div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <h1>Input the CSS for the cube</h1>
+    <h2>Preset: linear-gradient(45deg, indigo, violet)</h2>
+    <input id="css" placeholder="Enter background CSS for cube">
+    <button onclick="applydacss();">Apply da CSS</button>
+
+    <script>
+        function applydacss() {
+            // Get the input value for CSS
+            var cssValue = document.getElementById('css').value;
+
+            // Apply the CSS background to all cube faces
+            var cubeFaces = document.querySelectorAll('.unique-cube > div');
+            cubeFaces.forEach(function(face) {
+                face.style.background = cssValue;
+            });
+        }
+    </script>
+</body>
+</html>

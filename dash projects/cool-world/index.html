@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Game</title>
+    <style>
+        body, html { height: 100%; margin: 0; overflow: hidden; }
+        canvas { display: block; }
+        #gameContainer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let keys = { w: false, a: false, s: false, d: false };
+        let camera = { x: 0, y: 1.6, z: 0, rotationX: 0, rotationY: 0 };
+        const movementSpeed = 0.1;
+
+        const assets = {
+            ceiling: '/assets/fun game/ceiling.png',
+            floor: '/assets/fun game/floor.png',
+            sky: '/assets/fun game/sky.png',
+            wall: '/assets/fun game/wall.png'
+        };
+
+        const loadedAssets = {};
+
+        const loadAssets = () => {
+            let loadedCount = 0;
+            const totalAssets = Object.keys(assets).length;
+
+            for (let key in assets) {
+                loadedAssets[key] = new Image();
+                loadedAssets[key].src = assets[key];
+                loadedAssets[key].onload = () => {
+                    loadedCount++;
+                    console.log(`${key} loaded`);
+                    if (loadedCount === totalAssets) {
+                        console.log('All assets loaded');
+                        startGame();
+                    }
+                };
+                loadedAssets[key].onerror = (error) => {
+                    console.log(`Error loading ${key}:`, error);
+                };
+            }
+        };
+
+        const startGame = () => {
+            // Keydown and keyup listeners for movement
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'w') {
+                    keys.w = true;
+                }
+                if (e.key === 'a') {
+                    keys.a = true;
+                }
+                if (e.key === 's') {
+                    keys.s = true;
+                }
+                if (e.key === 'd') {
+                    keys.d = true;
+                }
+            });
+
+            document.addEventListener('keyup', (e) => {
+                if (e.key === 'w') {
+                    keys.w = false;
+                }
+                if (e.key === 'a') {
+                    keys.a = false;
+                }
+                if (e.key === 's') {
+                    keys.s = false;
+                }
+                if (e.key === 'd') {
+                    keys.d = false;
+                }
+            });
+
+            // Mouse movement listener for look-around
+            document.addEventListener('mousemove', (e) => {
+                const deltaX = e.clientX - canvas.width / 2;
+                const deltaY = e.clientY - canvas.height / 2;
+
+                // Adjust camera rotation based on mouse movement
+                camera.rotationY += deltaX * 0.002;
+                camera.rotationX -= deltaY * 0.002;
+                camera.rotationX = Math.max(Math.min(camera.rotationX, Math.PI / 2), -Math.PI / 2);
+            });
+
+            // Lock mouse cursor to the center
+            canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock;
+            canvas.onclick = () => { canvas.requestPointerLock(); };
+
+            gameLoop();
+        };
+
+        // Update the movement based on WASD keys
+        const updateMovement = () => {
+            const moveSpeed = 0.1;
+
+            // Forward movement (W)
+            if (keys.w) {
+                camera.x += Math.sin(camera.rotationY) * moveSpeed;
+                camera.z -= Math.cos(camera.rotationY) * moveSpeed;
+            }
+
+            // Backward movement (S)
+            if (keys.s) {
+                camera.x -= Math.sin(camera.rotationY) * moveSpeed;
+                camera.z += Math.cos(camera.rotationY) * moveSpeed;
+            }
+
+            // Strafe left (A)
+            if (keys.a) {
+                camera.x -= Math.cos(camera.rotationY) * moveSpeed;
+                camera.z -= Math.sin(camera.rotationY) * moveSpeed;
+            }
+
+            // Strafe right (D)
+            if (keys.d) {
+                camera.x += Math.cos(camera.rotationY) * moveSpeed;
+                camera.z += Math.sin(camera.rotationY) * moveSpeed;
+            }
+        };
+
+        // Draw the scene (background and floor)
+        const drawScene = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Skybox
+            if (loadedAssets.sky) {
+                ctx.save();
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.drawImage(loadedAssets.sky, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+                ctx.restore();
+            }
+
+            // Draw Floor
+            if (loadedAssets.floor) {
+                ctx.save();
+                ctx.translate(canvas.width / 2, canvas.height / 2 + 200); // Adjusted for ground
+                ctx.drawImage(loadedAssets.floor, -canvas.width / 2, 0, canvas.width, canvas.height / 2);
+                ctx.restore();
+            }
+
+            // Draw Walls (simple placeholder)
+            if (loadedAssets.wall) {
+                ctx.save();
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.drawImage(loadedAssets.wall, -canvas.width / 8, -canvas.height / 4, 500, 300); 
+                ctx.restore();
+            }
+
+            // Draw Camera Position as a small dot
+            ctx.save();
+            ctx.fillStyle = 'red'; // Red color for the camera position indicator
+            ctx.beginPath();
+            ctx.arc(camera.x + canvas.width / 2, camera.z + canvas.height / 2, 10, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        };
+
+        // Main game loop
+        const gameLoop = () => {
+            updateMovement(); // Update movement each frame
+            drawScene(); // Re-draw the scene each frame
+            requestAnimationFrame(gameLoop); // Loop
+        };
+
+        loadAssets();
+    </script>
+</body>
+</html>

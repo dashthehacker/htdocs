@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2D (3D) shooter</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="wireframe"></canvas>
+  <div id="score">Score: 0</div>
+  <div id="gameOver">Game Over<br><button id="reset">!!!!RESET!!!!</button></div>
+
+  <div id="titleScreen">
+    <h1>Vegetable Shooter</h1>
+    <button id="startButton">Start Game</button>
+    <div id="difficultySelect">
+      <label for="difficulty">Select Difficulty: </label>
+      <select id="difficulty">
+        <option value="easy">Easy</option>
+        <option value="medium" selected>Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+      <div style="display: flex; align-items: center;">
+        <input type="checkbox" id="bruh">
+        <h3>HEALTHY MODE!!!!</h3>
+      </div>      
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

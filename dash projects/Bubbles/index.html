@@ -1,0 +1,229 @@
+<body>
+    <div class="wrapper">
+<!--      <button id="fscreenbutton" onclick="openFullscreen();">Enter fullscreen</button> -->
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <div><span class="dot"></span></div>
+      <script src="fish.js"></script>
+    </div>
+    <head>
+      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="/killthebar.css">
+      <title>DIGITAL AQUARIUM</title>
+      <script>// Function to create and position the sandcastle at the bottom of the screen
+        function createSandcastle() {
+          // Create the sandcastle element
+          const sandcastle = document.createElement('img');
+          sandcastle.src = '/sandcastle.png';
+          sandcastle.alt = 'Sandcastle';
+          sandcastle.style.position = 'absolute';
+        
+          // Position the sandcastle at a random spot on the bottom of the screen
+          const screenWidth = window.innerWidth;
+          const screenHeight = window.innerHeight;
+          const randomX = 0.7030726078247018; // Random X position along the bottom
+          const bottomY = screenHeight - 150; // Position it near the bottom (adjust for height of sandcastle)
+        
+          sandcastle.style.left = randomX * screenWidth + 'px';
+          sandcastle.style.top = bottomY + 'px';
+          sandcastle.style.width = '150px'; // Set sandcastle size
+          sandcastle.style.height = 'auto'; // Maintain aspect ratio
+          sandcastle.style.pointerEvents = 'none'; // Prevent interaction
+        
+          document.body.appendChild(sandcastle);
+          //console.log(randomX);
+        }
+        createSandcastle();
+        </script>
+        <script>// Function to create and position the crab at the bottom of the screen
+          function createcrab() {
+            // Create the crab element
+            const crab = document.createElement('img');
+            crab.src = '/crab.png';
+            crab.alt = 'crab';
+            crab.style.position = 'absolute';
+          
+            // Position the crab at a random spot on the bottom of the screen
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            const randomX = 0.8211250608645635; // Random X position along the bottom
+            const bottomY = screenHeight - 100; // Position it near the bottom (adjust for height of crab)
+          
+            crab.style.left = randomX * screenWidth + 'px';
+            crab.style.top = bottomY + 'px';
+            crab.style.width = '100px'; // Set crab size
+            crab.style.height = 'auto'; // Maintain aspect ratio
+            crab.style.pointerEvents = 'none'; // Prevent interaction
+          
+            document.body.appendChild(crab);
+          }
+          createcrab();
+        </script>
+        <script>// Function to create and position the coral at the bottom of the screen
+          function createcoral() {
+            // Create the coral element
+            const coral = document.createElement('img');
+            coral.src = '/coral.png';
+            coral.alt = 'coral';
+            coral.style.position = 'absolute';
+          
+            // Position the coral at a random spot on the bottom of the screen
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            const randomCoralX = 0; // Random X position along the bottom
+            const bottomY = screenHeight - 1230; // Position it near the bottom (adjust for height of coral)
+          
+            coral.style.left = randomCoralX * screenWidth + 'px';
+            coral.style.top = bottomY + 'px';
+            coral.style.width = '1700px'; // Set coral size
+            coral.style.height = 'auto'; // Maintain aspect ratio
+            coral.style.pointerEvents = 'none'; // Prevent interaction
+          
+            document.body.appendChild(coral);
+            console.log(randomCoralX);
+          }
+          createcoral();
+        </script>
+        <script>// Function to create and position the seaweed at the bottom of the screen
+          function createseaweed() {
+            // Create the seaweed element
+            const seaweed = document.createElement('img');
+            seaweed.src = '/seaweed.png';
+            seaweed.alt = 'seaweed';
+            seaweed.style.position = 'absolute';
+          
+            // Position the seaweed at a random spot on the bottom of the screen
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            const randomseaweedX = 0.30; // Random X position along the bottom
+            const bottomY = screenHeight - 380; // Position it near the bottom (adjust for height of seaweed)
+          
+            seaweed.style.left = randomseaweedX * screenWidth + 'px';
+            seaweed.style.top = bottomY + 'px';
+            seaweed.style.width = '760px'; // Set seaweed size
+            seaweed.style.height = 'auto'; // Maintain aspect ratio
+            seaweed.style.pointerEvents = 'none'; // Prevent interaction
+          
+            document.body.appendChild(seaweed);
+            console.log(randomseaweedX);
+          }
+          createseaweed();
+        </script>
+        <script>// Function to create and position the seaweed at the bottom of the screen
+          function createseaweed() {
+            // Create the seaweed element
+            const seaweed = document.createElement('img');
+            seaweed.src = '/seaweed-ceiling.png';
+            seaweed.alt = 'seaweed';
+            seaweed.style.position = 'absolute';
+          
+            // Position the seaweed at a random spot on the bottom of the screen
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            const randomseaweedX = 0.60; // Random X position along the bottom
+            const bottomY = screenHeight - 1079.90;
+          
+            seaweed.style.left = randomseaweedX * screenWidth + 'px';
+            seaweed.style.top = bottomY + 'px';
+            seaweed.style.width = '760px'; // Set seaweed size
+            seaweed.style.height = 'auto'; // Maintain aspect ratio
+            seaweed.style.pointerEvents = 'none'; // Prevent interaction
+          
+            document.body.appendChild(seaweed);
+            console.log(randomseaweedX);
+          }
+          createseaweed();
+        </script>
+        <script>// Function to create and position the watersnail at the bottom of the screen
+          function createwatersnail() {
+            // Create the watersnail element
+            const watersnail = document.createElement('img');
+            watersnail.src = '/watersnail.png';
+            watersnail.alt = 'watersnail';
+            watersnail.style.position = 'absolute';
+          
+            // Position the watersnail at a random spot on the bottom of the screen
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            const randomX = 0.900990098645635; // Random X position along the bottom
+            const bottomY = screenHeight - 100; // Position it near the bottom (adjust for height of watersnail)
+          
+            watersnail.style.left = randomX * screenWidth + 'px';
+            watersnail.style.top = bottomY + 'px';
+            watersnail.style.width = '100px'; // Set watersnail size
+            watersnail.style.height = 'auto'; // Maintain aspect ratio
+            watersnail.style.pointerEvents = 'none'; // Prevent interaction
+          
+            document.body.appendChild(watersnail);
+          }
+          createwatersnail();
+        </script>
+        <script>// Function to create and position the watersnail at the bottom of the screen
+          function createwatersnail() {
+            // Create the watersnail element
+            const watersnail = document.createElement('img');
+            watersnail.src = '/fishes/spongebob.png';
+            watersnail.alt = 'watersnail';
+            watersnail.style.position = 'absolute';
+          
+            // Position the watersnail at a random spot on the bottom of the screen
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            const randomX = 0.94; // Random X position along the bottom
+            const bottomY = screenHeight - 107; // Position it near the bottom (adjust for height of watersnail)
+          
+            watersnail.style.left = randomX * screenWidth + 'px';
+            watersnail.style.top = bottomY + 'px';
+            watersnail.style.width = '110px'; // Set watersnail size
+            watersnail.style.height = 'auto'; // Maintain aspect ratio
+            watersnail.style.pointerEvents = 'none'; // Prevent interaction
+          
+            document.body.appendChild(watersnail);
+          }
+          createwatersnail();
+        </script>
+    </head>
+    <audio src="cool.mp3" autoplay="" loop="true"></audio>
+  </body>

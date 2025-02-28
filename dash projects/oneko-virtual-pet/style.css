@@ -1,0 +1,174 @@
+@font-face {
+    font-family: 'Daydream'; 
+    src: url('/daydream.ttf') format('truetype'); 
+    font-weight: normal; 
+    font-style: normal; 
+}
+
+body {
+    
+    color: white;
+    font-family: 'Daydream', sans-serif;
+    position: relative;
+    height: 100vh;
+    margin: 0;
+}
+
+#img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#hunger {
+    position: absolute;
+    top: calc(50% + 100px); 
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5em; 
+    color: white;
+    text-align: center;
+}
+
+#hunger.death {
+    color: red;
+}
+
+#money-text {
+    position: absolute;
+    top: calc(50% + 150px); 
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5em; 
+    color: rgb(41, 145, 91);
+    text-align: center;
+}
+
+#buttons-container {
+    position: absolute;
+    top: calc(55% + 200px); 
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px; 
+    justify-content: center;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: white;
+    background-color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Daydream', sans-serif;
+}
+
+button:hover {
+    background-color: #777777;
+}
+
+
+.fade {
+    opacity: 1;
+    transition: opacity 1s ease;  
+}
+
+.fade-out {
+    opacity: 0;  
+}
+
+
+.fade-in {
+    opacity: 1;  
+}
+
+#option-buttons {
+    position: absolute;
+    top: 10px; 
+    right: 10px; 
+    display: flex; 
+    gap: 10px; 
+}
+
+.hidden {
+  display: none;
+}
+
+#happy-text {
+    position: absolute;
+    top: calc(50% + 200px); 
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2em; 
+    color: rgb(255, 0, 0); 
+    text-align: center;
+    font-family: 'Daydream', sans-serif; 
+}
+
+#happy-text.sad {
+    color: rgb(80, 185, 220);
+}
+
+
+body {
+    transition: background 5s ease-in-out; 
+}
+
+
+body.daytime {
+    background: linear-gradient(to bottom, #87CEEB, #B0E0E6); 
+}
+
+
+body.nighttime {
+    background: linear-gradient(to bottom, #2c3e50, #34495e); 
+}
+
+#alive_count {
+    font-family: 'Daydream', 'sans-serif';
+}
+
+#alive_count.alive {
+    color: green;
+}
+
+#alive_count.death {
+    color: darkred;
+}
+
+#mus_btn {
+    font-family: 'Daydream', 'sans-serif';
+}
+
+#mus_btn.muted {
+    color: rgb(116, 113, 113);
+}
+
+#mus_btn.cute_playing {
+    color: rgb(231, 37, 195);
+}
+
+
+#secret {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.fade-in {
+    opacity: 0; /* Start fully transparent */
+    transition: opacity 2s ease; /* Smooth fade-in over 2 seconds */
+}
+
+.fade-in.visible {
+    opacity: 1; /* Fully visible */
+}

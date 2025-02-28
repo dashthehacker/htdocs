@@ -1,0 +1,20 @@
+/* Hide scrollbars across browsers */
+html {
+  scrollbar-width: none; /* Firefox */
+}
+
+body {
+  -ms-overflow-style: none; /* Internet Explorer and Edge */
+}
+
+/* Hide scrollbars for Webkit browsers (Chrome, Safari, Edge) */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Enable scrolling while hiding scrollbars */
+html, body {
+  overflow-y: scroll; /* Allow vertical scrolling */
+  overflow-x: hidden; /* Hide horizontal overflow */
+  margin: 0;
+}

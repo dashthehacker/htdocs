@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title id="title">Oneko Virtual Pet</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link id="normal" rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="/killthebar.css">
+    </head>
+    <body>
+        <h1 id="sleepy-text">Le sleep :)</h1>
+        <img id="img" src="/143828372.png">
+        <h3 id="hunger"></h3>
+        <h3 id="money-text">money</h3>
+        <h3 id="happy-text">Happiness here</h3>
+        <div id="buttons-container">
+            <button id="feed">FEED</button>
+            <button id="play" onclick="play(20);">PLAY</button>
+            <button id="work">WORK</button>
+        </div>
+        <div id="option-buttons">
+            <!--<button onclick="stopHungerDecrease();">Cheat!</button>
+            <button onclick="earnMoney(99999);">Become rich!</button>
+            <button onclick="sleep();">Make the cat sleep</button>--> <!--uncomment for debugging stuff-->
+        </div>
+        <script src="the_cat.js" async defer></script><script src="hunger.js"></script><script src="game_logic.js"></script><script src="money.js"></script><script src="work.js"></script><script src="happiness.js"></script><script src="save-load.js"></script><script>if (localStorage.getItem('virtualPetSave')) {loadGame();}</script><script src="life_counter.js"></script><script>function dual() {const dualscript = document.createElement("script");dualscript.src="/oneko.js";document.body.appendChild(dualscript);}</script><script src="debug.js"></script>
+    </body>
+</html>

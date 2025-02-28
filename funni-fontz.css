@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'Daydream'; 
+    src: url('/daydream.ttf') format('truetype'); 
+    font-weight: normal; 
+    font-style: normal; 
+}
+
+@font-face {
+    font-family: 'Gaster'; 
+    src: url('/fonts/wingding.ttf') format('truetype'); 
+    font-weight: normal; 
+    font-style: normal; 
+}
+
+/*
+@font-face {
+    font-family: 'Daydream'; 
+    src: url('/daydream.ttf') format('truetype'); 
+    font-weight: normal; 
+    font-style: normal; 
+}*/
+
+@font-face {
+    font-family: 'Western'; 
+    src: url('/fonts/WEST____.ttf') format('truetype'); 
+    font-weight: normal; 
+    font-style: normal; 
+}
+
+@font-face {
+    font-family: 'Doodle'; 
+    src: url('/fonts/Nooblewooble-p7RJ1.ttf') format('truetype'); 
+    font-weight: normal; 
+    font-style: normal; 
+}

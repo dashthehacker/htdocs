@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>DASH THE HACERZ PAGE</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link id="stupid-space-css" rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="funni-fontz.css">
+    <link rel="stylesheet" href="killthebar.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <style>
+      #oneko * {
+          all: initial;
+      }
+  
+      /* Container for the layout */
+      .container {
+          display: flex;
+          height: 100vh;
+          justify-content: space-between;
+          padding: 20px;
+      }
+  
+      /* Left side for visual content */
+      .left-side {
+          flex: 1;  /* Takes up remaining space */
+          position: relative;
+      }  
+      .right-side {
+          width: 25%; /* Set the right-side to 25% of the container's width */
+          min-width: 250px; /* Optional: prevents it from becoming too narrow */
+          margin-left: 20px; /* Add some space between left and right sides */
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+          overflow-y: auto; /* Enable vertical scrolling */
+          max-height: 100vh; /* Ensure it stays within the viewport */
+      }
+      .projects, .videos {
+          padding: 15px;
+          border-radius: 10px;
+          color: white;
+      }
+  
+      .projects h3, .videos h3 {
+          margin-top: 0;
+      }
+  
+      /* Style for rgb-split texts */
+      .rgb-split span {
+          color: #219919;
+      }
+  </style>
+<style>
+    html {
+        cursor: url('./Undertale_red_soul.png'), auto;
+    }
+</style>
+
+  <div id="about-me-div"><img id="logo-hacker" src="/143828372.png"><h3>About me:</h3><h5>I am the crazy guy who made this site. <br>I go by "Dash the hacker/slaya/haxx0r"<br>Yes I go by a crazy amount of names<br>Occupation:Student (Middle school)<br>Talent:Programming</h5></div>
+</head>
+<body>
+
+<!--[if IE]>
+    <script src="./oneko-ie6.js"></script>
+<![endif]-->
+<!--[if !IE]><!-->
+    <script src="./oneko.js"></script>
+<!--<![endif]-->       
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js"></script>
+<script src="script.js" async defer></script>
+
+<div class="container">
+    <!-- Left Side: Visual Content -->
+    <div class="left-side">
+        <div id="haxtext" class="rgb-split" data-text="Hacking...... Success! PICK YOUR POISON:">
+            <span>Hacking...... Success! PICK YOUR POISON:</span>
+        </div>
+        <br>
+        <div id="toxictext" class="rgb-split" data-text="MOST ARE TOXIC">
+            <span>MOST ARE TOXIC</span>
+        </div>
+        <br>
+        <h1 id="evil-smile">:)</h1>
+        <br>
+        <button id="settingz" onclick="L('/settings/');">Site settings</button>
+        <br><br>
+        <div class="unique-scene">
+            <div id="unique-cube" class="unique-cube">
+                <div class="unique-front"></div>
+                <div class="unique-back"></div>
+                <div class="unique-right"></div>
+                <div class="unique-left"></div>
+                <div class="unique-top"></div>
+                <div class="unique-bottom"></div>
+            </div>
+        </div>
+
+        <!-- Cube animations -->
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+    </div>
+
+    <!-- Right Side: Projects and Videos -->
+    <div id="bruhtesting" class="right-side">
+        <!-- Projects Section -->
+        <div class="projects">
+            <h3>Projects</h3>
+            <button onclick="coolvideo('rickroll.mp4',true);">Play a cool video</button>
+            <button onclick="aquarium();">DIGITAL AQUARIUM</button>
+            <button onclick="gamerz();">Unfinished buggy platformer</button>
+            <!--<button onclick="L('/platformer');">PLATFORMER</button>-->
+            <button onclick="L('/dash projects/hacker/');">Pretend to be hacker</button>
+            <button onclick="L('/dash Projects/oneko-virtual-pet/');">Cat virual pet</button>
+            <button onclick="snake();">SNAKE</button>
+            <button onclick="L('3d-playground.html');">3D cube css editing playground</button>
+            <button onclick="L('/dash projects/zap/');">My cats</button>
+            <button onclick="L('/dash projects/amazing-2d-maze/');">Horrible maze</button>
+            <button onclick="L('/dash projects/crazy-8-ball/');">Crazy 8 Ball.</button>
+            <button onclick="L('/dash projects/mus-picker/')">Sound test</button>
+            <button onclick="L('/dash projects/choices/')">Poison picker</button>
+        </div>
+
+        <!-- Videos Section -->
+        <div class="videos">
+            <h3>Most Toxic Stuff</h3>
+            <button onclick="L('/dash projects/cheating/');"><img src="/dash projects/cheating/800px-Game-Genie-NES.png"></button>
+            <button onclick="hortas();"><img src="/hortas_edition.png"></button>
+            <button onclick="bite_me();"><img src="/bite_me.png"></button>
+        </div>
+        <div class="friend">
+            <h1>My friends projects (I cannot name him)</h1>
+            <button onclick="L('/cooler-lil-game/');">Cool game my friend made (TF2 webgame)</button>
+        </div>
+        <div class="tashascorner">
+            <h1>Tashas Corner</h1>
+            <button onclick="L('/tashas-corner/coolawesomevisualeffects/')">Cool awesome visual effects</button>
+        </div>
+        <br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+</div>
+
+<script src="loopscript.js"></script>
+<script src="playerscript.js"></script>
+<!--<script>
+    const buttonImage = document.getElementById('conbi-button');
+  
+    buttonImage.addEventListener('mouseover', () => {
+        buttonImage.src = '/delerium-dead.png'; // Image for hover
+    });
+
+    buttonImage.addEventListener('mouseout', () => {
+        buttonImage.src = '/delerium-normal.png'; // Original image
+    });
+</script>-->
+<script src="/evil-smile.js"></script><!---->
+<script src="/themez.js"></script><!-------->
+</body>
+</html>

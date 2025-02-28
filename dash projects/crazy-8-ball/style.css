@@ -1,0 +1,51 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*???????????????????????????*/
+body {
+    background-color: black;
+    color: white;
+}
+#western-thing {
+    color: rgb(19, 128, 179);
+    font-family: 'Western';
+    font-size: xx-large;
+}
+
+body {
+    background-image: url('/assets/8ball.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain; 
+    background-attachment: fixed; 
+}
+
+#fortune {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    text-align: center; 
+    font-size: 2rem; 
+    color: rgb(14, 140, 83); 
+    font-family: 'Daydream';
+}
+
+
+.daydream {
+    font-family: 'Daydream';
+    color: purple;
+    background-color: pink;
+}

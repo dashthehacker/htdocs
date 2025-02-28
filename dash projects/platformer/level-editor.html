@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Platfomer Level Editor</title>
+		<style>
+			body {user-select: none;}
+			#main {
+				margin: auto;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				-ms-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+				
+			}
+			canvas {
+				background: #ccc;
+				transition:.25s;
+				cursor: crosshair;
+			}
+			#pause {
+				background: #aaa;
+				margin: 0;
+				padding: 10px;
+				font: 36px Arial;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				-ms-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+				display: none;
+				place-items: center;
+				border: 1px solid black;
+				border-radius: 5px;
+			}
+			#pause button {
+				background-color: #777;
+				border: 1px solid black;
+				margin: 1px;
+				border-radius: 5px;
+			}
+			p {
+				position: absolute;
+				font-family: Courier;
+				margin: 0;
+				padding:5px;
+				background: white;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="main">
+			<canvas id="platformer">Your browser doesn't support the HTML5 canvas element!</canvas>
+			<div id="pause">
+				PAUSED<br>
+				<button onclick="togglePause()">Resume</button>
+				<button onclick="togglePause();init()">Restart Level</button>
+				<button onclick="togglePause();level=startLevel;init()">Clear Progress</button>
+			</div>
+		</div>
+		Press Esc to toggle between editing and testing!
+		<form>
+			Tool:
+			<select id="tools" name="tools">
+				<option value="start">Start (click)</option>
+				<option value="end">End (click)</option>
+				<option value="plat">Platforms (drag)</option>
+				<option value="lava">Lava (drag)</option>
+				<option value="keys">Keys (click)</option>
+				<option value="port">Portals (drag)</option>
+			</select>
+		</form>
+		Level text tips (optional):<br><input type="text"id="text"oninput="levels[level].text=this.value;editDraw()"></input><br>
+		Mouse position: <span id="cursor"></span><br>
+		Lock to the nearest <input type="number"oninput="locker=this.value;editDraw()"value="25"style="width: 36px"></input><br>
+		<b>Shift + Click = Delete. </b><br>
+		When deleting platforms or lava, <br>click near the top-left corner.<br>
+		<button id="download" title="Ctrl + S">Download level</button><a id="a" style="display:none"></a><br>
+		<input type="file" id="upload" style="display:none" accept=".json"><button onclick="upload.click()">Upload Level</button><br>
+		<span id="version"></span><br>
+
+		<script>var levels=[{
+		version: 1,
+		start: [],
+		end: [],
+		boxes: [],
+		text: "",
+		lava: [],
+		keys: [],
+		portals: []
+		}],startLevel=0,inEditor=true;</script>
+
+		<script src="engine.js"></script>            <!-- NOTE: This code uses the main game's engine for testing and rendering, -->
+		<script src="editor-engine.js"></script>     <!--       so two scripts are used in this program                          -->
+	</body>
+</html>

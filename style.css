@@ -1,0 +1,395 @@
+body {
+    background: radial-gradient(circle, #1b0530, #4b006e, #8a0066); /* Nebula effect */
+    overflow: hidden; /* Prevent scrolling */
+    color: #e0e0e0;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+
+/* Red Text */
+.red {
+    color: #ff4444;  /* A more subtle red for a polished look */
+}
+
+/* Links */
+a {
+    color: #66ccff;  /* A soft blue for links */
+    text-decoration: none;  /* Remove underline for a cleaner look */
+}
+
+a:hover {
+    color: #ff6600;  /* Change link color on hover */
+}
+
+/* Header Styles */
+h1, h2, h3 {
+    color: #ffffff;  /* White for headings to stand out */
+    font-family: 'Helvetica', sans-serif;  /* Sans-serif for headings */
+}
+
+/* Button Styles */
+button {
+    background-color: #333333;  /* Dark background for buttons */
+    color: #ffffff;  /* White text */
+    border: 1px solid #444444;  /* Subtle border */
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555555;  /* Darker button on hover */
+}
+
+/* Card or Container Styles */
+.container {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);  /* Soft shadow for depth */
+}
+
+/* Footer */
+footer {
+    background-color: #222222;  /* Dark footer */
+    color: #888888;  /* Light grey text for footer */
+    text-align: center;
+    padding: 20px;
+}
+
+
+/* Smooth Transitions */
+* {
+    transition: all 0.3s ease;  /* Smooth transition for most properties */
+}
+
+/* Hover Effects for Links and Buttons */
+a:hover,
+button:hover {
+    transform: scale(1.05);  /* Slight zoom effect on hover */
+}
+
+/* Card Styles (For sections, info boxes, etc.) */
+.card {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    background-color: #333333;  /* Darken card on hover */
+    transform: translateY(-5px);  /* Lift card effect */
+}
+
+/* Input Fields */
+input, textarea {
+    background-color: #333333;  /* Dark background for inputs */
+    color: #e0e0e0;  /* Light text for readability */
+    border: 1px solid #444444;  /* Subtle border */
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #66ccff;  /* Highlight input on focus */
+}
+
+/* Modal Styles (For Popups) */
+.modal {
+    display: none;  /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1c1c1c;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    width: 80%;
+    max-width: 500px;
+    color: #ffffff;
+}
+
+.modal.open {
+    display: block;  /* Show modal when open */
+}
+
+.modal-header {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.modal-footer {
+    text-align: right;
+}
+
+.modal-close {
+    background-color: #ff4444;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    background-color: #cc3333;  /* Darker close button on hover */
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #222222;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #444444;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #888888;
+}
+
+.rgb-split {
+    position: relative;
+    font-size: 3em;  /* Adjust font size as needed */
+    color: white;    /* Default color, this can be any neutral color */
+    text-transform: uppercase;  /* Optional: uppercase text */
+    display: inline-block;
+}
+
+.rgb-split::before,
+.rgb-split::after {
+    content: attr(data-text); /* Set the text content */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.rgb-split::before {
+    color: red;
+    text-shadow: -5px 0 0 rgba(255, 0, 0, 1); /* Move the red copy to the left */
+    z-index: -1;
+}
+
+.rgb-split::after {
+    color: blue;
+    text-shadow: 5px 0 0 rgba(0, 0, 255, 1);  /* Move the blue copy to the right */
+    z-index: -2;
+}
+
+.rgb-split span {
+    position: relative;
+    color: green;
+    z-index: 0;
+}
+
+/* Additional Split Effect - Can Add More Layers If Needed */
+.rgb-split .extra {
+    color: red;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-shadow: -3px 0 0 rgba(255, 0, 0, 1); /* Spread more red */
+    z-index: -3;
+}
+
+.idiotfacebutton {
+    font-size: 50px; /* Adjust the size as needed */
+}
+
+
+
+/* General Body Styles */
+body {
+    background: radial-gradient(circle, #1b0530, #4b006e, #8a0066); /* Nebula effect */
+    overflow: hidden; /* Prevent scrolling */
+    color: #e0e0e0;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+/* Add Stars */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none; /* Allow clicks to pass through */
+}
+
+
+/* Floating Cubes */
+.cube {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-image: url('/143828372.png');
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    transform: rotateX(0deg) rotateY(0deg);
+    animation: float 20s infinite linear;
+}
+
+/* Random Cube Placement */
+.cube:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; }
+.cube:nth-child(2) { top: 20%; left: 60%; animation-delay: 2s; }
+.cube:nth-child(3) { top: 70%; left: 30%; animation-delay: 4s; }
+.cube:nth-child(4) { top: 50%; left: 80%; animation-delay: 6s; }
+.cube:nth-child(5) { top: 15%; left: 40%; animation-delay: 8s; }
+
+/* Floating Animation */
+@keyframes float {
+    0% {
+        transform: translateZ(0) rotateX(0deg) rotateY(0deg);
+    }
+    50% {
+        transform: translateZ(200px) rotateX(180deg) rotateY(180deg);
+    }
+    100% {
+        transform: translateZ(0) rotateX(360deg) rotateY(360deg);
+    }
+}
+
+.unique-scene {
+  width: 200px;
+  height: 200px;
+  perspective: 800px;
+  position: relative; /* or absolute/fixed depending on your layout */
+  top: 200px; /* Adjust this value to move it down */
+  left: 50px; /* Move it to the right */
+  animation: floatUpDown 1s ease-in-out infinite;
+}
+
+
+.unique-cube {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: unique-spin 5s infinite linear;
+}
+
+.unique-cube > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgb(170, 0, 255), rgb(255, 0, 166), rgb(93, 0, 255), rgb(249, 31, 184), rgb(156, 38, 109), indigo, violet);
+  background-size: 400% 400%;
+  border: 2px solid white;
+  animation: unique-rainbow 3s infinite linear;
+}
+
+/* Cube Faces */
+.unique-front {
+  transform: rotateY(0deg) translateZ(100px);
+}
+.unique-back {
+  transform: rotateY(180deg) translateZ(100px);
+}
+.unique-right {
+  transform: rotateY(90deg) translateZ(100px);
+}
+.unique-left {
+  transform: rotateY(-90deg) translateZ(100px);
+}
+.unique-top {
+  transform: rotateX(90deg) translateZ(100px);
+}
+.unique-bottom {
+  transform: rotateX(-90deg) translateZ(100px);
+}
+
+@keyframes unique-spin {
+  from {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  to {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+
+@keyframes unique-rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes floatUpDown {
+    0% { transform: translateY(-50%) translateY(-30px); }
+    50% { transform: translateY(-50%) translateY(30px); }
+    100% { transform: translateY(-50%) translateY(-30px); }
+}
+
+
+#about-me-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px; /* Set the width of your div */
+  height: 250px; /* Set the height of your div */
+  background-color: #000000; /* Optional background color */
+}
+
+#skull {
+    font-family: 'Gaster';
+    font-size: xx-large;
+}
+
+#logo-hacker {
+  width: 86px;  /* Shrinks the image to 200px in width */
+  height: auto;  /* Keeps the aspect ratio */
+  z-index: 10;
+  position: relative;
+}
+
+@keyframes rainbow {
+    0% { color: red; }
+    14% { color: orange; }
+    28% { color: yellow; }
+    42% { color: green; }
+    57% { color: blue; }
+    71% { color: indigo; }
+    85% { color: violet; }
+    100% { color: red; }
+}
+
+.splash-text {
+    animation: rainbow 5s linear infinite;
+    font-weight: bold;
+}
+
+#evil-smile {
+    transform: rotate(90deg);
+    transform-origin: top left;
+    position: relative;
+    left: 50px;
+    user-select: none;
+    pointer-events: auto;
+}

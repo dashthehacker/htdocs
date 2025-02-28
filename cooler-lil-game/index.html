@@ -1,0 +1,990 @@
+<html><head><base href="."><title>Team Fortress 2 Web Game</title>
+  <style>
+  :root {
+    --tf2-red: #ff4040;
+    --tf2-blue: #4040ff;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    background: #2c3e50;
+    color: white;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+  }
+  
+  #game-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+  
+  .player {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    transition: transform 0.1s;
+  }
+  
+  .platform {
+    position: absolute;
+    background: #444;
+    border: 2px solid #666;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+  
+  .health-bar {
+    position: fixed;
+    width: 200px;
+    height: 20px;
+    background: #333;
+    border: 2px solid var(--tf2-red);
+  }
+  
+  #player1-health {
+    top: 20px;
+    left: 20px;
+    border-color: var(--tf2-red);
+  }
+  
+  #player2-health {
+    top: 20px;
+    right: 20px;
+    border-color: var(--tf2-blue);
+  }
+  
+  .health-fill {
+    width: 100%;
+    height: 100%;
+    transition: width 0.3s;
+  }
+  
+  #player1-health-fill {
+    background: var(--tf2-red);
+  }
+  
+  #player2-health-fill {
+    background: var(--tf2-blue);
+  }
+  
+  .ammo {
+    position: fixed;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  #player1-ammo {
+    top: 50px;
+    left: 20px;
+    color: var(--tf2-red);
+  }
+  
+  #player2-ammo {
+    top: 50px;
+    right: 20px;
+    color: var(--tf2-blue);
+  }
+  
+  .projectile {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  
+  .projectile.red {
+    background: var(--tf2-red);
+  }
+  
+  .projectile.blue {
+    background: var(--tf2-blue);
+  }
+  
+  #game-over {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    text-shadow: 0 0 10px rgba(255,0,0,0.5);
+  }
+  
+  .capture-room {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 3px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: glow 2s infinite alternate;
+  }
+  
+  .capture-room.red {
+    background: rgba(255, 0, 0, 0.1);
+    border-color: var(--tf2-red);
+  }
+  
+  .capture-room.blue {
+    background: rgba(0, 0, 255, 0.1);
+    border-color: var(--tf2-blue);
+  }
+  
+  .capture-text {
+    font-size: 12px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 5px rgba(255,255,255,0.3);
+    }
+    to {
+      box-shadow: 0 0 15px rgba(255,255,255,0.6);
+    }
+  }
+  
+  .briefcase {
+    position: absolute;
+    width: 30px;
+    height: 20px;
+    border: 2px solid #855723;
+    background: #bc7f33;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .briefcase.red { 
+    border-color: var(--tf2-red); 
+  }
+  
+  .briefcase.blue { 
+    border-color: var(--tf2-blue); 
+  }
+  
+  .score {
+    position: fixed;
+    font-size: 32px;
+    font-weight: bold;
+    top: 80px;
+  }
+  
+  #red-score {
+    left: 20px;
+    color: var(--tf2-red);
+  }
+  
+  #blue-score {
+    right: 20px; 
+    color: var(--tf2-blue);
+  }
+  
+  .ladder {
+    position: absolute;
+    background: linear-gradient(90deg, #8B4513 0%, #8B4513 30%, transparent 30%, transparent 70%, #8B4513 70%, #8B4513 100%);
+    border: 2px solid #654321;
+  }
+  
+  .ladder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      transparent 15px,
+      #8B4513 15px,
+      #8B4513 20px
+    );
+  }
+  
+  .recording-indicator {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: none;
+  }
+  </style>
+  </head>
+  <body>
+  <div id="class-selection">
+    <h2>Classes - Player 1 (RED)</h2>
+    <p>Press 1 for Scout, 2 for Soldier, 3 for Heavy</p>
+    <p>Controls: WASD to move, S to shoot</p>
+  </div>
+  
+  <div id="game-container">
+    <div id="player1" class="player">
+      <svg viewBox="0 0 50 50">
+        <circle cx="25" cy="25" r="20" fill="var(--tf2-red)"/>
+        <rect x="20" y="15" width="10" height="10" fill="white"/>
+      </svg>
+    </div>
+    <div id="player2" class="player">
+      <svg viewBox="0 0 50 50">
+        <circle cx="25" cy="25" r="20" fill="var(--tf2-blue)"/>
+        <rect x="20" y="15" width="10" height="10" fill="white"/>
+      </svg>
+    </div>
+    <div id="player1-health" class="health-bar"><div id="player1-health-fill" class="health-fill"></div></div>
+    <div id="player2-health" class="health-bar"><div id="player2-health-fill" class="health-fill"></div></div>
+    <div id="player1-ammo" class="ammo">Ammo: 200</div>
+    <div id="player2-ammo" class="ammo">Ammo: 200</div>
+    <div id="red-score" class="score">0</div>
+    <div id="blue-score" class="score">0</div>
+    <div id="game-over">GAME OVER!</div>
+  </div>
+  <div class="recording-indicator">Recording...</div>
+  
+  <script>const classes = {
+    scout: {
+      health: 125,
+      ammo: 32,
+      speed: 7,
+      damage: 8,
+      shootCooldown: 100
+    },
+    soldier: {
+      health: 200,
+      ammo: 200,
+      speed: 4,
+      damage: 30,
+      shootCooldown: 800
+    },
+    heavy: {
+      health: 300,
+      ammo: 200,
+      speed: 3,
+      damage: 20,
+      shootCooldown: 100
+    }
+  };
+  const player1 = {
+    element: document.getElementById('player1'),
+    x: 150,
+    y: window.innerHeight - 200,
+    velocity: {
+      x: 0,
+      y: 0
+    },
+    health: 200,
+    maxHealth: 200,
+    ammo: 200,
+    facing: 1,
+    team: 'red',
+    class: null,
+    lastShotTime: 0,
+    spawnX: 150,
+    spawnY: window.innerHeight - 200,
+    grounded: false,
+    jumpCount: 0
+  };
+  const player2 = {
+    element: document.getElementById('player2'),
+    x: window.innerWidth - 180,
+    y: window.innerHeight - 200,
+    velocity: {
+      x: 0,
+      y: 0
+    },
+    health: 200,
+    maxHealth: 200,
+    ammo: 200,
+    facing: -1,
+    team: 'blue',
+    class: null,
+    lastShotTime: 0,
+    spawnX: window.innerWidth - 180,
+    spawnY: window.innerHeight - 200,
+    grounded: false,
+    jumpCount: 0
+  };
+  let currentSelector = 'red';
+  let gameStarted = false;
+  let redScore = 0;
+  let blueScore = 0;
+  let isCPU = false;
+  let cpuActionTimer = 0;
+  let isRecording = false;
+  let recordedActions = [];
+  let replayMode = false;
+  let lastRecordTime = 0;
+  const RECORD_INTERVAL = 50;
+  const game = {
+    gravity: 0.5,
+    jumpForce: -12,
+    moveSpeed: 5,
+    projectiles: [],
+    platforms: [{
+      x: 0,
+      y: window.innerHeight - 10,
+      width: window.innerWidth,
+      height: 50
+    }, {
+      x: 50,
+      y: window.innerHeight - 150,
+      width: 200,
+      height: 30
+    }, {
+      x: window.innerWidth - 250,
+      y: window.innerHeight - 150,
+      width: 200,
+      height: 30
+    }, {
+      x: window.innerWidth / 2 - 150,
+      y: window.innerHeight - 250,
+      width: 300,
+      height: 30
+    }, {
+      x: 300,
+      y: window.innerHeight - 350,
+      width: 100,
+      height: 20
+    }, {
+      x: window.innerWidth - 400,
+      y: window.innerHeight - 350,
+      width: 100,
+      height: 20
+    }],
+    ladders: [{
+      x: 250,
+      y: window.innerHeight - 350,
+      width: 40,
+      height: 200
+    }, {
+      x: window.innerWidth - 290,
+      y: window.innerHeight - 350,
+      width: 40,
+      height: 200
+    }, {
+      x: window.innerWidth / 2 - 20,
+      y: window.innerHeight - 450,
+      width: 40,
+      height: 200
+    }],
+    resupplyRooms: [{
+      x: 50,
+      y: window.innerHeight - 250,
+      width: 100,
+      height: 100
+    }, {
+      x: window.innerWidth - 150,
+      y: window.innerHeight - 250,
+      width: 100,
+      height: 100
+    }],
+    flags: {
+      red: {
+        element: document.createElement('div'),
+        x: 150,
+        y: window.innerHeight - 180,
+        carrier: null,
+        atBase: true,
+        baseX: 150,
+        baseY: window.innerHeight - 180
+      },
+      blue: {
+        element: document.createElement('div'),
+        x: window.innerWidth - 180,
+        y: window.innerHeight - 180,
+        carrier: null,
+        atBase: true,
+        baseX: window.innerWidth - 180,
+        baseY: window.innerHeight - 180
+      }
+    }
+  };
+  Object.entries(game.flags).forEach(([team, flag]) => {
+    flag.element.className = `briefcase ${team}`;
+    flag.element.style.left = flag.x + 'px';
+    flag.element.style.top = flag.y + 'px';
+    document.getElementById('game-container').appendChild(flag.element);
+  });
+  game.platforms.forEach(platform => {
+    const element = document.createElement('div');
+    element.className = 'platform';
+    element.style.left = platform.x + 'px';
+    element.style.top = platform.y + 'px';
+    element.style.width = platform.width + 'px';
+    element.style.height = platform.height + 'px';
+    document.getElementById('game-container').appendChild(element);
+  });
+  game.ladders.forEach(ladder => {
+    const element = document.createElement('div');
+    element.className = 'ladder';
+    element.style.left = ladder.x + 'px';
+    element.style.top = ladder.y + 'px';
+    element.style.width = ladder.width + 'px';
+    element.style.height = ladder.height + 'px';
+    document.getElementById('game-container').appendChild(element);
+  });
+  game.resupplyRooms.forEach((room, index) => {
+    const element = document.createElement('div');
+    element.className = `capture-room ${index === 0 ? 'red' : 'blue'}`;
+    element.style.left = room.x + 'px';
+    element.style.top = room.y + 'px';
+    element.innerHTML = `<div class="capture-text">${index === 0 ? 'RED' : 'BLUE'}<br>Capture Point</div>`;
+    document.getElementById('game-container').appendChild(element);
+  });
+  const keys = {};
+  window.addEventListener('keydown', e => {
+    if (!gameStarted) {
+      let className;
+      if (e.key === '1') className = 'scout';else if (e.key === '2') className = 'soldier';else if (e.key === '3') className = 'heavy';
+      if (currentSelector === 'blue' && e.key === 'y') {
+        isCPU = true;
+        selectClass('heavy', 'blue');
+      }
+      if (className) {
+        selectClass(className, currentSelector);
+      }
+    }
+    keys[e.key] = true;
+    if (e.key === ',') {
+      const classList = ['scout', 'soldier', 'heavy'];
+      if (keys['a'] || keys['d'] || keys['w'] || keys[' ']) {
+        const currentIndex = classList.indexOf(player1.class);
+        const nextIndex = (currentIndex + 1) % classList.length;
+        const newClass = classList[nextIndex];
+        player1.class = newClass;
+        const stats = classes[newClass];
+        player1.health = stats.health;
+        player1.maxHealth = stats.health;
+        player1.ammo = stats.ammo;
+      } else if (keys['ArrowLeft'] || keys['ArrowRight'] || keys['ArrowUp'] || keys['ArrowDown']) {
+        const currentIndex = classList.indexOf(player2.class);
+        const nextIndex = (currentIndex + 1) % classList.length;
+        const newClass = classList[nextIndex];
+        player2.class = newClass;
+        const stats = classes[newClass];
+        player2.health = stats.health;
+        player2.maxHealth = stats.health;
+        player2.ammo = stats.ammo;
+      }
+    }
+    if (e.key === 'Enter') {
+      restartGame();
+    }
+    if (e.key === 'r') {
+      if (!isRecording) {
+        startRecording();
+      } else {
+        stopRecording();
+      }
+    }
+  });
+  window.addEventListener('keyup', e => keys[e.key] = false);
+  function startRecording() {
+    isRecording = true;
+    recordedActions = [];
+    lastRecordTime = Date.now();
+    console.log('Recording started');
+  }
+  function stopRecording() {
+    isRecording = false;
+    replayMode = true;
+    console.log('Recording stopped. Recorded ' + recordedActions.length + ' actions');
+  }
+  function recordAction(player) {
+    if (!isRecording) return;
+    const currentTime = Date.now();
+    if (currentTime - lastRecordTime < RECORD_INTERVAL) return;
+    recordedActions.push({
+      time: currentTime,
+      x: player.x,
+      y: player.y,
+      velocity: {
+        ...player.velocity
+      },
+      facing: player.facing,
+      shooting: keys['s'],
+      jumping: keys['w']
+    });
+    lastRecordTime = currentTime;
+  }
+  function updateRecordingIndicator() {
+    const recordingIndicator = document.querySelector('.recording-indicator');
+    recordingIndicator.style.display = isRecording ? 'block' : 'none';
+  }
+  function updatePlayer(player, controls) {
+    if (player === player1) {
+      recordAction(player);
+    }
+    const stats = classes[player.class];
+    const moveSpeed = stats.speed;
+    if (!player.grounded) {
+      player.grounded = false;
+    }
+    if (keys[controls.left]) {
+      player.velocity.x = -moveSpeed;
+      player.facing = -1;
+    } else if (keys[controls.right]) {
+      player.velocity.x = moveSpeed;
+      player.facing = 1;
+    } else {
+      player.velocity.x = 0;
+    }
+    if (keys[controls.up]) {
+      const maxJumps = player.class === 'scout' ? 2 : 1;
+      if (player.grounded || player.jumpCount < maxJumps) {
+        player.velocity.y = game.jumpForce;
+        player.jumpCount++;
+        player.grounded = false;
+      }
+    }
+    let onLadder = false;
+    game.ladders.forEach(ladder => {
+      const ladderRect = {
+        x: ladder.x,
+        y: ladder.y,
+        width: ladder.width,
+        height: ladder.height
+      };
+      if (checkCollision({
+        x: player.x,
+        y: player.y,
+        width: 50,
+        height: 50
+      }, ladderRect)) {
+        onLadder = true;
+        if (keys[controls.up]) {
+          player.velocity.y = -4;
+          player.grounded = false;
+        } else if (keys[controls.down]) {
+          player.velocity.y = 4;
+        } else {
+          player.velocity.y = 0;
+        }
+      }
+    });
+    if (!onLadder) {
+      player.velocity.y += game.gravity;
+    }
+    let newX = player.x + player.velocity.x;
+    let newY = player.y + player.velocity.y;
+    if (newX < 0) newX = 0;
+    if (newX > window.innerWidth - 50) newX = window.innerWidth - 50;
+    player.x = newX;
+    player.y = newY;
+    const playerRect = {
+      x: player.x,
+      y: player.y,
+      width: 50,
+      height: 50
+    };
+    game.platforms.forEach(platform => {
+      if (checkCollision(playerRect, platform)) {
+        if (player.velocity.y > 0 && player.y + playerRect.height <= platform.y + player.velocity.y) {
+          player.y = platform.y - playerRect.height;
+          player.velocity.y = 0;
+          player.grounded = true;
+          player.jumpCount = 0;
+        } else if (player.velocity.y < 0 && player.y >= platform.y + platform.height + player.velocity.y) {
+          player.y = platform.y + platform.height;
+          player.velocity.y = 0;
+        }
+      }
+    });
+    game.resupplyRooms.forEach(room => {
+      if (checkCollision(playerRect, room)) {
+        player.health = player.maxHealth;
+        player.ammo = 200;
+        document.getElementById(`${player.team === 'red' ? 'player1' : 'player2'}-ammo`).textContent = `Ammo: ${player.ammo}`;
+      }
+    });
+    Object.entries(game.flags).forEach(([team, flag]) => {
+      const flagRect = {
+        x: flag.x,
+        y: flag.y,
+        width: 30,
+        height: 20
+      };
+      if (checkCollision(playerRect, flagRect)) {
+        if (!flag.carrier) {
+          if (team !== player.team) {
+            flag.carrier = player;
+            flag.atBase = false;
+          } else if (!flag.atBase && player.team === team) {
+            flag.carrier = null;
+            flag.x = flag.baseX;
+            flag.y = flag.baseY;
+            flag.atBase = true;
+            flag.element.style.left = flag.x + 'px';
+            flag.element.style.top = flag.y + 'px';
+          }
+        }
+      }
+    });
+    player.element.style.transform = `translate(${player.x}px, ${player.y}px) scaleX(${player.facing})`;
+    if (player.y > window.innerHeight) {
+      player.health = 0;
+    }
+    document.getElementById(`${player.team === 'red' ? 'player1' : 'player2'}-health-fill`).style.width = player.health / player.maxHealth * 100 + '%';
+    if (keys[controls.shoot] && player.ammo > 0) {
+      const rect = player.element.getBoundingClientRect();
+      shootProjectile(player, rect.x + rect.width / 2 + player.facing * 100, rect.y);
+    }
+  }
+  function restartGame() {
+    redScore = 0;
+    blueScore = 0;
+    document.getElementById('red-score').textContent = '0';
+    document.getElementById('blue-score').textContent = '0';
+    player1.x = player1.spawnX;
+    player1.y = player1.spawnY;
+    player1.health = player1.maxHealth;
+    player1.ammo = classes[player1.class].ammo;
+    player1.velocity = {
+      x: 0,
+      y: 0
+    };
+    player1.jumpCount = 0;
+    player1.grounded = false;
+    player2.x = player2.spawnX;
+    player2.y = player2.spawnY;
+    player2.health = player2.maxHealth;
+    player2.ammo = classes[player2.class].ammo;
+    player2.velocity = {
+      x: 0,
+      y: 0
+    };
+    player2.jumpCount = 0;
+    player2.grounded = false;
+    Object.entries(game.flags).forEach(([team, flag]) => {
+      flag.carrier = null;
+      flag.x = flag.baseX;
+      flag.y = flag.baseY;
+      flag.atBase = true;
+      flag.element.style.left = flag.x + 'px';
+      flag.element.style.top = flag.y + 'px';
+    });
+    game.projectiles.forEach(projectile => {
+      projectile.element.remove();
+    });
+    game.projectiles = [];
+    document.getElementById('player1-health-fill').style.width = '100%';
+    document.getElementById('player2-health-fill').style.width = '100%';
+    document.getElementById('player1-ammo').textContent = `Ammo: ${player1.ammo}`;
+    document.getElementById('player2-ammo').textContent = `Ammo: ${player2.ammo}`;
+    document.getElementById('game-over').style.display = 'none';
+    gameStarted = true;
+    requestAnimationFrame(gameLoop);
+  }
+  function gameLoop() {
+    updateRecordingIndicator();
+    if (!gameStarted) return;
+    updatePlayer(player1, {
+      left: 'a',
+      right: 'd',
+      up: 'w',
+      down: 's',
+      shoot: 's'
+    });
+    if (isCPU) {
+      updateCPU();
+    } else {
+      updatePlayer(player2, {
+        left: 'ArrowLeft',
+        right: 'ArrowRight',
+        up: 'ArrowUp',
+        down: 'ArrowDown',
+        shoot: 'ArrowDown'
+      });
+    }
+    game.projectiles.forEach((projectile, index) => {
+      projectile.x += projectile.velocity.x;
+      projectile.y += projectile.velocity.y;
+      projectile.element.style.left = projectile.x + 'px';
+      projectile.element.style.top = projectile.y + 'px';
+      const projectileRect = {
+        x: projectile.x,
+        y: projectile.y,
+        width: 10,
+        height: 10
+      };
+      const targetPlayer = projectile.team === 'red' ? player2 : player1;
+      const targetRect = {
+        x: targetPlayer.x,
+        y: targetPlayer.y,
+        width: 50,
+        height: 50
+      };
+      if (checkCollision(projectileRect, targetRect)) {
+        const sourcePlayer = projectile.team === 'red' ? player1 : player2;
+        const damage = projectile.damage;
+        targetPlayer.health -= damage;
+        projectile.element.remove();
+        game.projectiles.splice(index, 1);
+      } else if (projectile.y > window.innerHeight || projectile.x < 0 || projectile.x > window.innerWidth) {
+        projectile.element.remove();
+        game.projectiles.splice(index, 1);
+      }
+    });
+    if (player1.health <= 0) {
+      respawnPlayer(player1);
+    }
+    if (player2.health <= 0) {
+      respawnPlayer(player2);
+    }
+    Object.entries(game.flags).forEach(([team, flag]) => {
+      if (flag.carrier) {
+        flag.x = flag.carrier.x + 10;
+        flag.y = flag.carrier.y + 10;
+        flag.element.style.left = flag.x + 'px';
+        flag.element.style.top = flag.y + 'px';
+        const enemyResupplyRoom = game.resupplyRooms[team === 'red' ? 1 : 0];
+        const flagRect = {
+          x: flag.x,
+          y: flag.y,
+          width: 30,
+          height: 20
+        };
+        if (checkCollision(flagRect, enemyResupplyRoom) && flag.carrier.team !== team) {
+          if (team === 'red') {
+            blueScore++;
+            document.getElementById('blue-score').textContent = blueScore;
+          } else {
+            redScore++;
+            document.getElementById('red-score').textContent = redScore;
+          }
+          flag.carrier = null;
+          flag.x = flag.baseX;
+          flag.y = flag.baseY;
+          flag.atBase = true;
+          flag.element.style.left = flag.x + 'px';
+          flag.element.style.top = flag.y + 'px';
+        }
+      }
+    });
+    if (redScore >= 3 || blueScore >= 3) {
+      document.getElementById('game-over').style.display = 'block';
+      if (redScore >= 3) {
+        document.getElementById('game-over').textContent = 'RED TEAM WINS BY CAPTURE!';
+      } else {
+        document.getElementById('game-over').textContent = 'BLUE TEAM WINS BY CAPTURE!';
+      }
+      gameStarted = false;
+      return;
+    }
+    requestAnimationFrame(gameLoop);
+  }
+  function checkCollision(rect1, rect2) {
+    return rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x && rect1.y < rect2.y + rect2.height && rect1.y + rect1.height > rect2.y;
+  }
+  function respawnPlayer(player) {
+    player.x = player.spawnX;
+    player.y = player.spawnY;
+    player.health = player.maxHealth;
+    player.ammo = classes[player.class].ammo;
+    player.velocity = {
+      x: 0,
+      y: 0
+    };
+    player.jumpCount = 0;
+    player.grounded = false;
+    Object.entries(game.flags).forEach(([team, flag]) => {
+      if (flag.carrier === player) {
+        flag.carrier = null;
+        flag.atBase = false;
+        flag.element.style.left = flag.x + 'px';
+        flag.element.style.top = flag.y + 'px';
+      }
+    });
+    if (player.class === 'demoman') {
+      player.grenadeCount = 4;
+    }
+    const teamPrefix = player.team === 'red' ? 'player1' : 'player2';
+    document.getElementById(`${teamPrefix}-health-fill`).style.width = '100%';
+    document.getElementById(`${teamPrefix}-ammo`).textContent = `Ammo: ${player.ammo}`;
+  }
+  function shootProjectile(player, targetX, targetY) {
+    const currentTime = Date.now();
+    const stats = classes[player.class];
+    if (player.ammo <= 0 || currentTime - player.lastShotTime < stats.shootCooldown) return;
+    const rect = player.element.getBoundingClientRect();
+    const projectile = document.createElement('div');
+    projectile.className = `projectile ${player.team}`;
+    const spawnX = rect.x + rect.width / 2;
+    const spawnY = rect.y + rect.height / 2;
+    projectile.style.left = spawnX + 'px';
+    projectile.style.top = spawnY + 'px';
+    document.getElementById('game-container').appendChild(projectile);
+    const projectileSpeed = 15;
+    const velocityX = player.facing * projectileSpeed;
+    game.projectiles.push({
+      element: projectile,
+      x: spawnX,
+      y: spawnY,
+      velocity: {
+        x: velocityX,
+        y: 0
+      },
+      team: player.team,
+      damage: classes[player.class].damage
+    });
+    player.ammo--;
+    player.lastShotTime = currentTime;
+    document.getElementById(`${player.team === 'red' ? 'player1' : 'player2'}-ammo`).textContent = `Ammo: ${player.ammo}`;
+  }
+  function selectClass(className, team) {
+    const player = team === 'red' ? player1 : player2;
+    player.class = className;
+    const stats = classes[className];
+    player.health = stats.health;
+    player.maxHealth = stats.health;
+    player.ammo = stats.ammo;
+    if (team === 'red') {
+      document.getElementById('class-selection').innerHTML = `
+        <h2>Classes - Player 2 (BLUE)</h2>
+        <p>Press 1 for Scout, 2 for Soldier, 3 for Heavy</p>
+      `;
+      currentSelector = 'blue';
+    } else {
+      document.getElementById('class-selection').style.display = 'none';
+      gameStarted = true;
+      gameLoop();
+    }
+  }
+  function updateCPU() {
+    if (replayMode && recordedActions.length > 0) {
+      const currentTime = Date.now();
+      const actionIndex = Math.floor(currentTime % (recordedActions.length * RECORD_INTERVAL) / RECORD_INTERVAL);
+      const action = recordedActions[actionIndex];
+      player2.velocity.x = action.x > player2.x ? classes[player2.class].speed : -classes[player2.class].speed;
+      player2.facing = action.facing;
+      if (action.jumping && player2.grounded) {
+        player2.velocity.y = game.jumpForce;
+        player2.jumpCount++;
+        player2.grounded = false;
+      }
+      if (action.shooting) {
+        const rect = player2.element.getBoundingClientRect();
+        shootProjectile(player2, rect.x + rect.width / 2 + player2.facing * 100, rect.y);
+      }
+    } else {
+      cpuActionTimer++;
+      const dx = player1.x - player2.x;
+      const dy = player1.y - player2.y;
+      const randomDelay = Math.random() > 0.1;
+      if (Math.random() < 0.05) {
+        player2.velocity.x *= -1;
+      }
+      if (Math.abs(dx) > 100 && randomDelay) {
+        const speedVariation = Math.random() * 0.4 + 0.8;
+        player2.velocity.x = dx > 0 ? classes[player2.class].speed * speedVariation : -classes[player2.class].speed * speedVariation;
+        player2.facing = dx > 0 ? 1 : -1;
+      } else {
+        player2.velocity.x = 0;
+      }
+      if ((dy < -50 || Math.random() < 0.02) && player2.grounded) {
+        player2.velocity.y = game.jumpForce;
+        player2.jumpCount++;
+        player2.grounded = false;
+      }
+      if (cpuActionTimer % 30 === 0 && Math.abs(dx) < 300 && Math.abs(dy) < 100) {
+        const aimError = (Math.random() - 0.5) * 100;
+        const rect = player2.element.getBoundingClientRect();
+        if (Math.random() > 0.2) {
+          shootProjectile(player2, rect.x + rect.width / 2 + player2.facing * 100 + aimError, rect.y);
+        }
+      }
+      let newX = player2.x + player2.velocity.x;
+      let newY = player2.y + player2.velocity.y;
+      if (!player2.grounded) {
+        player2.velocity.y += game.gravity;
+      }
+      if (newX < 0) newX = 0;
+      if (newX > window.innerWidth - 50) newX = window.innerWidth - 50;
+      player2.x = newX;
+      player2.y = newY;
+      const playerRect = {
+        x: player2.x,
+        y: player2.y,
+        width: 50,
+        height: 50
+      };
+      game.platforms.forEach(platform => {
+        if (checkCollision(playerRect, platform)) {
+          if (player2.velocity.y > 0 && player2.y + playerRect.height <= platform.y + player2.velocity.y) {
+            player2.y = platform.y - playerRect.height;
+            player2.velocity.y = 0;
+            player2.grounded = true;
+            player2.jumpCount = 0;
+          } else if (player2.velocity.y < 0 && player2.y >= platform.y + platform.height + player2.velocity.y) {
+            player2.y = platform.y + platform.height;
+            player2.velocity.y = 0;
+          }
+        }
+      });
+      let onLadder = false;
+      game.ladders.forEach(ladder => {
+        const ladderRect = {
+          x: ladder.x,
+          y: ladder.y,
+          width: ladder.width,
+          height: ladder.height
+        };
+        if (checkCollision(playerRect, ladderRect)) {
+          onLadder = true;
+          if (dy < 0) {
+            player2.velocity.y = -4;
+            player2.grounded = false;
+          } else if (dy > 0) {
+            player2.velocity.y = 4;
+          } else {
+            player2.velocity.y = 0;
+          }
+        }
+      });
+      if (!onLadder) {
+        player2.velocity.y += game.gravity;
+      }
+      game.resupplyRooms.forEach(room => {
+        if (checkCollision(playerRect, room)) {
+          player2.health = player2.maxHealth;
+          player2.ammo = 200;
+          document.getElementById('player2-ammo').textContent = `Ammo: ${player2.ammo}`;
+        }
+      });
+      Object.entries(game.flags).forEach(([team, flag]) => {
+        const flagRect = {
+          x: flag.x,
+          y: flag.y,
+          width: 30,
+          height: 20
+        };
+        if (checkCollision(playerRect, flagRect)) {
+          if (!flag.carrier) {
+            if (team !== player2.team) {
+              flag.carrier = player2;
+              flag.atBase = false;
+            } else if (!flag.atBase && player2.team === team) {
+              flag.carrier = null;
+              flag.x = flag.baseX;
+              flag.y = flag.baseY;
+              flag.atBase = true;
+              flag.element.style.left = flag.x + 'px';
+              flag.element.style.top = flag.y + 'px';
+            }
+          }
+        }
+      });
+      if (player2.y > window.innerHeight) {
+        player2.health = 0;
+      }
+      player2.element.style.transform = `translate(${player2.x}px, ${player2.y}px) scaleX(${player2.facing})`;
+    }
+  }</script>
+  </body></html>

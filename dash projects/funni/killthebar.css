@@ -1,0 +1,20 @@
+/* For most modern browsers */
+html {
+    scrollbar-width: none; /* For Firefox */
+  }
+  
+  body {
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+    overflow: hidden; /* Optional: prevent scrolling */
+  }
+  
+  /* Hide scrollbars for Webkit browsers (Chrome, Safari, Edge) */
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+
+html, body {
+    overflow: hidden;
+}
+  

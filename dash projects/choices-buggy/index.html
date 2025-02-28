@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choices Game</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f0f0f0;}
+        #game { text-align: center; }
+        .door { display: inline-block; width: 100px; height: 200px; margin: 10px; background-color: #8B4513; cursor: pointer; border-radius: 8px; }
+        .door.clicked { background-color: #808080; }
+        .door.extra-life { background-color: pink; }
+        .door.death { background-color: red; }
+        #score, #lives { font-size: 20px; margin: 10px; }
+    </style>
+</head>
+<body>
+
+<div id="game">
+    <div id="score">Score: 0</div>
+    <div id="lives">Lives: 3</div>
+    <div id="doors">
+        <div class="door" onclick="chooseDoor(0)"></div>
+        <div class="door" onclick="chooseDoor(1)"></div>
+        <div class="door" onclick="chooseDoor(2)"></div>
+    </div>
+</div>
+
+<script>
+    let score = 0;
+    let lives = 3;
+    let healthDoorIndex = -1;
+
+    function randomizeDoors() {
+        let correct = Math.floor(Math.random() * 3);
+        let healthDoor = (correct + 1 + Math.floor(Math.random() * 2)) % 3;
+        let deathDoor = (correct + 2 + Math.floor(Math.random() * 2)) % 3;
+
+        const doors = document.querySelectorAll('.door');
+        doors.forEach(door => door.classList.remove('clicked', 'extra-life', 'death'));
+
+        doors[correct].dataset.type = 'correct';
+        doors[healthDoor].dataset.type = 'health';
+        doors[deathDoor].dataset.type = 'death';
+    }
+
+    function chooseDoor(index) {
+        const doors = document.querySelectorAll('.door');
+        const selectedDoor = doors[index];
+
+        if (selectedDoor.classList.contains('clicked')) {
+            return;
+        }
+
+        selectedDoor.classList.add('clicked');
+
+        if (selectedDoor.dataset.type === 'correct') {
+            score++;
+            document.getElementById('score').textContent = `Score: ${score}`;
+            randomizeDoors();
+        } else if (selectedDoor.dataset.type === 'health') {
+            lives++;
+            document.getElementById('lives').textContent = `Lives: ${lives}`;
+            selectedDoor.classList.remove('extra-life');
+            selectedDoor.classList.add('death');
+        } else if (selectedDoor.dataset.type === 'death') {
+            lives--;
+            document.getElementById('lives').textContent = `Lives: ${lives}`;
+            if (lives <= 0) {
+                alert("Game Over! You lost all lives.");
+                resetGame();
+            } else {
+                randomizeDoors();
+            }
+        }
+
+        // Apply door color based on the type
+        if (selectedDoor.dataset.type === 'correct') {
+            selectedDoor.style.backgroundColor = '#808080';  // Grey
+        } else if (selectedDoor.dataset.type === 'health') {
+            selectedDoor.style.backgroundColor = 'pink';
+        } else if (selectedDoor.dataset.type === 'death') {
+            selectedDoor.style.backgroundColor = 'red';
+        }
+    }
+
+    function resetGame() {
+        score = 0;
+        lives = 3;
+        document.getElementById('score').textContent = `Score: ${score}`;
+        document.getElementById('lives').textContent = `Lives: ${lives}`;
+        randomizeDoors();
+    }
+
+    randomizeDoors();
+</script>
+
+</body>
+</html>
