@@ -429,5 +429,9 @@ window.mobileAndTabletCheck = function() {
 };
 
 if (window.mobileAndTabletCheck === true) {
-  window.location="/lol/index.html"
+  lol();
+}
+
+function lol() {
+  window.location="/lol/index.html";
 }

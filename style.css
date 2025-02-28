@@ -36,7 +36,7 @@ button {
     color: #ffffff;  /* White text */
     border: 1px solid #444444;  /* Subtle border */
     padding: 10px 20px;
-    cursor: pointer;
+    cursor: url('/hacker cursor-click.png'), auto;
 }
 
 button:hover {
@@ -137,7 +137,7 @@ input:focus, textarea:focus {
     padding: 8px 16px;
     border-radius: 8px;
     color: white;
-    cursor: pointer;
+    cursor: url('/hacker cursor-click.png'), auto;
 }
 
 .modal-close:hover {
