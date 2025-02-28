@@ -127,7 +127,7 @@ function handleAnswer(event) {
       const trip_music = document.createElement('audio');
       trip_music.autoplay='true';
       trip_music.loop="true";
-      trip_music.src='/assets/crazy.mp3';
+      trip_music.src='/assets/Crazy.mp3';
       document.body.appendChild(trip_music); 
       clearInterval(window.lifebarcolorinterval);
       clearInterval(window.muscheck);     
