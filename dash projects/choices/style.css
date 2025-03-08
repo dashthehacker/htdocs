@@ -14,13 +14,13 @@ body {
     font-weight: bold;
     margin-bottom: 20px;
     text-align: center;
-    color: #333;
+    color: #ffffff;
 }
 
 #lives, #score, #level {
     font-size: 1.2rem;
     margin: 5px;
-    color: #555;
+    color: #ff3b3b;
 }
 
 #doors {
