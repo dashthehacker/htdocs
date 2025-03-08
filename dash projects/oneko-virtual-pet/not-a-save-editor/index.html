@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not virtual pet save editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+        .output {
+            padding: 10px;
+            margin-top: 20px;
+            width: 300px;
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Not virtual pet save editor</h1>
+    <div class="container">
+        <button onclick="loadSaveFromLocalStorage()">Load Save from LocalStorage</button>
+
+        <div class="output" id="loadedSaveOutput"></div>
+
+        <input type="number" id="money" placeholder="Money" />
+        <label for="money">Money</label>
+
+        <input type="number" id="happiness" placeholder="Happiness" />
+        <label for="happiness">Happiness</label>
+
+        <input type="number" id="hunger" placeholder="Hunger" />
+        <label for="hunger">Hunger</label>
+
+        <label>
+            <input type="checkbox" id="isDayTime" /> Is Day Time
+        </label>
+        <label>
+            <input type="checkbox" id="secretFlag" /> HACKER TOOK OVER THE WORLD?
+        </label>
+        <label>
+            <input type="checkbox" id="bypassSaveChecks" /> Bypass all save checks (including loading)
+        </label>
+
+        <button onclick="saveEditedData()">Save Edited Data</button>
+        <div class="output" id="editOutput"></div>
+    </div>
+
+    <script>
+        function isValidSave(save, bypass = false) {
+            const { money, happiness, hunger, secretFlag } = save;
+
+            if (bypass) return true; // Skip validation if bypass is checked
+            
+            // If the "HACKER TOOK OVER THE WORLD?" is enabled, the save should be invalid only if it violates other rules.
+            if (secretFlag) {
+                return money < 0 || hunger < 0 || hunger > 100 || happiness < 0 || happiness > 100;
+            }
+
+            // Regular validation if secretFlag is not set
+            return !(money < 0 || hunger < 0 || hunger > 100 || happiness < 0 || happiness > 100);
+        }
+
+        function loadSaveFromLocalStorage() {
+            const bypass = document.getElementById("bypassSaveChecks").checked;
+            const savedData = localStorage.getItem("virtualPetSave");
+            if (savedData) {
+                let saveData;
+                try {
+                    saveData = JSON.parse(savedData);
+                } catch (e) {
+                    document.getElementById("loadedSaveOutput").innerText = "Invalid JSON format in LocalStorage.";
+                    return;
+                }
+
+                if (isValidSave(saveData, bypass)) {
+                    document.getElementById("money").value = saveData.money;
+                    document.getElementById("happiness").value = saveData.happiness;
+                    document.getElementById("hunger").value = saveData.hunger;
+                    document.getElementById("isDayTime").checked = saveData.isDayTime;
+                    document.getElementById("secretFlag").checked = saveData.secretFlag;
+                    document.getElementById("loadedSaveOutput").innerText = "Save loaded successfully from LocalStorage!";
+                } else {
+                    document.getElementById("loadedSaveOutput").innerText = "Invalid save data in LocalStorage.";
+                }
+            } else {
+                document.getElementById("loadedSaveOutput").innerText = "No save found in LocalStorage.";
+            }
+        }
+
+        function saveEditedData() {
+            const money = parseInt(document.getElementById("money").value, 10);
+            const happiness = parseInt(document.getElementById("happiness").value, 10);
+            const hunger = parseInt(document.getElementById("hunger").value, 10);
+            const isDayTime = document.getElementById("isDayTime").checked;
+            const secretFlag = document.getElementById("secretFlag").checked;
+            const bypass = document.getElementById("bypassSaveChecks").checked;
+
+            const editedSave = {
+                money: money,
+                happiness: happiness,
+                hunger: hunger,
+                isDayTime: isDayTime,
+                secretFlag: secretFlag
+            };
+
+            if (isValidSave(editedSave, bypass)) {
+                localStorage.setItem("virtualPetSave", JSON.stringify(editedSave));
+                document.getElementById("editOutput").innerText = "Save edited and stored successfully!";
+            } else {
+                document.getElementById("editOutput").innerText = "Edited save is invalid.";
+            }
+        }
+    </script>
+</body>
+</html>
