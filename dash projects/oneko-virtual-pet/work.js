@@ -145,7 +145,20 @@ function handleAnswer(event) {
       const reminder = document.createElement('h1');
       reminder.textContent="Oh yeah! When you are ready to face me just reload this save!";
       document.body.appendChild(reminder);
-    }else {
+    }
+    else if (userInput === "FREE MONEY") {
+      money = -9999;
+      updateMoney();
+      localStorage.removeItem('virtualPetSave');
+      document.getElementById("option-buttons").remove();
+      endChallenge();
+      document.getElementById('buttons-container').remove();
+      if (isDayTime === true) {
+        switchDayNight();
+      }
+      clearInterval(window.daynightcycle);
+    }
+    else {
       const userAnswer = parseInt(userInput, 10);
       if (!isNaN(userAnswer)) {
         if (userAnswer === currentAnswer) {
