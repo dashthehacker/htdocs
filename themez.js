@@ -19,4 +19,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     themestuff();
+    document.getElementById("loljscheck").remove();
 });
