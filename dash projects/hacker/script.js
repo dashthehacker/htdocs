@@ -1,7 +1,20 @@
+var elem = document.documentElement;
+
+function openFullscreen() {
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) { /* Safari */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE11 */
+      elem.msRequestFullscreen();
+    }
+  }
+
 function start() {
     // Remove the button
     const funni_button = document.getElementById("funni-button");
     funni_button.remove();
+    openFullscreen();
 
     // Create the canvas
     const canvas = document.createElement("canvas");

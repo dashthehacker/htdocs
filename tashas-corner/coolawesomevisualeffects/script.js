@@ -20,12 +20,14 @@ const images = [
 
 document.addEventListener("DOMContentLoaded", () => {
     const dosomething = document.getElementById("dosomething");
-    thestuff(dosomething);
+    const text_stuff = document.getElementById("text");
+    thestuff(dosomething, text);
 });
 
-function thestuff(link) {
+function thestuff(link, text) {
     link.addEventListener("click", function () {
         dosomething.remove();
+        text.remove();
 
         // Preload images by adding them to a hidden container
         const preloadContainer = document.createElement('div');
