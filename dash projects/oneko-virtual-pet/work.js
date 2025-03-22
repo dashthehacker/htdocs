@@ -5,6 +5,7 @@ function worksleep(delayInSeconds) {
 
 const workButton = document.getElementById("work");
 const mathProblemElement = document.createElement('h3');
+try {if (localStorage.getItem("mobile")  === "true") {mathProblemElement.id="mathproblem";}} catch {}
 const answerInput = document.createElement('input');
 const timerElement = document.createElement('h3');
 document.body.appendChild(mathProblemElement);

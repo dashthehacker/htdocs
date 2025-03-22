@@ -14,6 +14,11 @@ body {
     margin: 0;
 }
 
+#mathproblem {
+    font-size: 40px;
+    color: rgb(0, 242, 255);
+}
+
 #img {
     position: absolute;
     top: 50%;
