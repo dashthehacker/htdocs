@@ -97,7 +97,7 @@
     nekoEl.style.zIndex = 2147483647;
     nekoEl.style.transition="none";
 
-    let nekoFile = "./oneko.gif"
+    let nekoFile = "./zap.gif"
     const curScript = document.currentScript
     if (curScript && curScript.dataset.cat) {
       nekoFile = curScript.dataset.cat
