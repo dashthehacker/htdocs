@@ -6,7 +6,7 @@
     <title>DASH THE HACERZ PAGE</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link id="stupid-space-css" rel="stylesheet" href="style.css">
+    <link id="stupid-space-css" rel="stylesheet" href="">
     <link rel="stylesheet" href="funni-fontz.css">
     <link rel="stylesheet" href="killthebar.css">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -53,6 +53,7 @@
           color: #219919;
       }
   </style>
+  <!--<style id="hide">html{display: none}</style>-->
 <style>
     html {
         cursor: url('/hacker cursor.png'), auto;
@@ -64,11 +65,31 @@
     cursor: url('/hacker cursor-click.png'), auto;
     }
 </style>
-
-  <div id="about-me-div"><img id="logo-hacker" src="/143828372.png"><h3>About me:</h3><h5>I am the crazy guy who made this site. <br>I go by "Dash the hacker/slaya/haxx0r"<br>Yes I go by a crazy amount of names<br>Occupation:Student (Middle school)<br>Talent:Programming</h5></div>
+<style id="loljscheck">
+    body, html {
+        display: none;
+    }
+</style>
+<noscript>THIS WHOLE WEBSITE IS JS BASED</noscript>
+  <!--<div id="about-me-div"><img id="logo-hacker" src="/143828372.png"><h3>About me:</h3><h5>I am the crazy guy who made this site. <br>I go by "Dash the hacker/slaya/haxx0r"<br>Yes I go by a crazy amount of names<br>Occupation:Student (Middle school)<br>Talent:Programming</h5></div>-->
+  <script>if (localStorage.getItem("mobile") === "false") {window.location="/"}</script>
 </head>
 <body>
-
+    <div id="about-me-div">
+        <img id="logo-hacker" src="/143828372.png">
+        <h3 data-text="About me:">About me:</h3>
+        <h5 data-text="I am the crazy guy who made this site.
+    I go by 'Dash the hacker/slaya/haxx0r'
+    Yes I go by a crazy amount of names
+    Occupation: Student (Middle school)
+    Talent: Programming">
+            I am the crazy guy who made this site.<br>
+            I go by "Dash the hacker/slaya/haxx0r"<br>
+            Yes I go by a crazy amount of names<br>
+            Occupation: Student (Middle school)<br>
+            Talent: Programming
+        </h5>
+    </div>
 <!--[if IE]>
     <script src="./oneko-ie6.js"></script>
 <![endif]-->
@@ -125,7 +146,6 @@
             <!--<button onclick="L('/platformer');">PLATFORMER</button>-->
             <button onclick="L('/dash projects/hacker/');">Pretend to be hacker</button>
             <button onclick="L('/dash projects/oneko-virtual-pet/');">Cat virual pet</button>
-            <button onclick="snake();">SNAKE</button>
             <button onclick="L('/dash projects/zap/');">My cats</button>
             <button onclick="L('/dash projects/crazy-8-ball/');">Crazy 8 Ball.</button>
             <button onclick="L('/dash projects/mus-picker/')">Sound test</button>
@@ -138,9 +158,6 @@
             <button onclick="L('/dash projects/cheating/');"><img src="/dash projects/cheating/800px-Game-Genie-NES.png"></button>
             <button onclick="hortas();"><img src="/hortas_edition.png"></button>
             <button onclick="bite_me();"><img src="/bite_me.png"></button>
-        </div>
-        <div class="friend">
-            <h1>My friends projects (I cannot name him)</h1>
         </div>
         <div class="tashascorner">
             <h1>Tashas Corner</h1>

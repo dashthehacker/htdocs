@@ -39,3 +39,7 @@ function getChoice() {
     localStorage.setItem("theme", selected);
   }
   
+
+function mobile(ismobile) {
+    localStorage.setItem("mobile", ismobile);
+}
