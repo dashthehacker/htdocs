@@ -1,0 +1,43 @@
+body {
+    background-color: black;
+}
+
+#Title {
+    font-size: 50px;
+    position: relative;
+    font-weight: bold;
+    text-transform: uppercase;
+    user-select: none;
+    pointer-events: none;
+}
+
+#Title::before,
+#Title::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+    mix-blend-mode: screen;
+}
+
+#Title::before {
+    color: cyan;
+    transform: translate(-2px, -1px);
+}
+
+#Title::after {
+    color: magenta;
+    transform: translate(2px, 1px);
+}
+
+
+#RandomProjectSuggestion {
+    color: White;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    user-select: none;
+}
