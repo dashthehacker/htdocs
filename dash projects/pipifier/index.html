@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>PiPifier</title>
+        <style>
+            body {
+                color: white;
+                background-color: black;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Welcome to the PiPifier!</h1>
+        <h3>PiPifier is a utilitiy that lets you Picture in Picture any Tab, Window, Screen into a small window :)</h3>
+        <script>
+            async function startScreenPip() {
+                const stream = await navigator.mediaDevices.getDisplayMedia({
+                    video: { mediaSource: 'screen' }
+                });
+
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                video.muted = true;
+                await video.play();
+
+                await video.requestPictureInPicture();
+        }
+
+        </script>
+        <button style="background-color: grey;" onclick="startScreenPip();">RUN!</button>
+    </body>
+</html>
