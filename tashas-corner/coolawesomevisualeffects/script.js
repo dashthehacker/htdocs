@@ -9,7 +9,7 @@ const images = [
     '/assets/I%20feel%20like%20I%20am%20on%20a...%20Trip%20-%20merg.gif',
     '/assets/insanity.gif',
     '/assets/Orange.gif',
-    '/assets/RGB.gif',
+//    '/assets/RGB.gif',
     '/assets/Seisure.gif',
     '/assets/snake.gif',
     '/assets/Trippy.gif',
